@@ -1,5 +1,6 @@
 package webstaurantstore.tests;
 
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -7,6 +8,7 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.testng.Assert;
+import org.apache.logging.log4j.LogManager;
 
 import webstaurantstore.pageactions.Actions;
 
@@ -20,11 +22,15 @@ public class TestSearchProduct {
     ChromeOptions options;
     private Actions actions;
 
+    // Create a logger instance.
+    private static final Logger logger = LogManager.getLogger(TestSearchProduct.class);
+
     /**
      * Setup method to initialize the WebDriver and navigate to the web page.
      */
     @BeforeTest
     void setUp() {
+        logger.info("Starting setup!");
         String URL = "https://www.webstaurantstore.com/";
 
         // Configure Chrome options
@@ -39,12 +45,12 @@ public class TestSearchProduct {
     }
 
     @Test(description = "[TEST-ID:001] Search for a product")
-    public void testABC() {
+    public void testSearchProduct() {
         actions.doSearchForProduct("icecream");
     }
 
     @Test(description = "[TEST-ID:002] Check the product text result")
-    public void testSearch() {
+    public void testSearchResultText() {
         String result = actions.getSearchResultText();
         Assert.assertTrue(result.contains("icecream"));
     }
@@ -57,7 +63,7 @@ public class TestSearchProduct {
     public void tearDown() {
         if (driver != null) {
             driver.quit();
-            System.out.println("The driver has been closed.");
+            logger.info("Driver closed!");
         }
     }
 }
