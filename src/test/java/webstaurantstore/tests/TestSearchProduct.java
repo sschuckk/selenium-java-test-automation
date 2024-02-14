@@ -4,9 +4,7 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import org.testng.Assert;
 import org.apache.logging.log4j.LogManager;
 
@@ -44,15 +42,21 @@ public class TestSearchProduct {
         actions = new Actions(driver);
     }
 
-    @Test(description = "[TEST-ID:001] Search for a product")
-    public void testSearchProduct() {
-        actions.doSearchForProduct("icecream");
+    @DataProvider(name = "data-provider")
+    public Object[][] dpMethod() {
+        return new Object[][] {{"ice cream"}, {"coffee"}, {"amana"}};
     }
 
-    @Test(description = "[TEST-ID:002] Check the product text result")
-    public void testSearchResultText() {
+    @Test(dataProvider = "data-provider", description = "[TEST-ID:001] Search for a product")
+    public void testSearchProduct(String product) {
+        actions.doSearchForProduct(product);
+    }
+
+    @Test(dataProvider = "data-provider", description = "[TEST-ID:002] Check the product text result")
+    public void testSearchResultText(String product) {
+        actions.doSearchForProduct(product);
         String result = actions.getSearchResultText();
-        Assert.assertTrue(result.contains("icecream"));
+        Assert.assertTrue(result.contains(product));
     }
 
 
