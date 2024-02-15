@@ -42,21 +42,35 @@ public class TestSearchProduct {
         actions = new Actions(driver);
     }
 
-    @DataProvider(name = "data-provider")
-    public Object[][] dpMethod() {
+    @DataProvider(name = "valid-product")
+    public Object[][] dpValid() {
         return new Object[][] {{"ice cream"}, {"coffee"}, {"amana"}};
     }
 
-    @Test(dataProvider = "data-provider", description = "[TEST-ID:001] Search for a product")
+    @DataProvider(name = "invalid-product")
+    public Object[][] dpInvalid() {
+        return new Object[][] {{"@#$"}, {" "}, {"1234567890"}};
+    }
+
+    @Test(dataProvider = "valid-product", description = "[TEST-ID:001] Search for a product")
     public void testSearchProduct(String product) {
         actions.doSearchForProduct(product);
     }
 
-    @Test(dataProvider = "data-provider", description = "[TEST-ID:002] Check the product text result")
+    @Test(dataProvider = "valid-product", description = "[TEST-ID:002] Search for a product and check the product text result")
     public void testSearchResultText(String product) {
         actions.doSearchForProduct(product);
         String result = actions.getSearchResultText();
+
         Assert.assertTrue(result.contains(product));
+    }
+
+    @Test(dataProvider = "invalid-product", description = "[TEST-ID:003] Search for an invalid product and check for the 'Sorry' message")
+    public void testSearchNotFound(String product) {
+        actions.doSearchForProduct(product);
+        String result = actions.getSearchResultText();
+
+        Assert.assertTrue(result.contains("Sorry"));
     }
 
 
@@ -67,7 +81,7 @@ public class TestSearchProduct {
     public void tearDown() {
         if (driver != null) {
             driver.quit();
-            logger.info("Driver closed!");
+            logger.info("Driver instance closed!");
         }
     }
 }

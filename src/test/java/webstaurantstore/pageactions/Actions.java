@@ -35,7 +35,7 @@ public class Actions {
      */
     public String getSearchResultText() {
         var searchpage = new SearchPage(webDriver);
-        return searchpage.SearchWrapText();
+        return searchpage.SearchResultText();
     }
 
 }
