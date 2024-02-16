@@ -49,7 +49,7 @@ public class TestSearchProduct {
 
     @DataProvider(name = "invalid-product")
     public Object[][] dpInvalid() {
-        return new Object[][] {{"@#$"}, {" "}, {"1234567890"}};
+        return new Object[][] {{"~"}, {"@#$"}, {"1234567890"}};
     }
 
     @Test(dataProvider = "valid-product", description = "[TEST-ID:001] Search for a product")
@@ -70,7 +70,7 @@ public class TestSearchProduct {
         actions.doSearchForProduct(product);
         String result = actions.getSearchResultText();
 
-        Assert.assertTrue(result.contains("Sorry"));
+        Assert.assertTrue(result.contains("Sorry, we couldn't find any matches for"));
     }
 
 
