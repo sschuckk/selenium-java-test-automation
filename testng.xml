@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<!-- SeleniumJavaTestAutomation -->
+
+<!-- Choose between Parallel or Sequence execution -->
+<!--<suite name="[Webstaurantstore: Suite-1] Sequence execution ">-->
+<suite name="[Webstaurantstore: Suite-2] Parallel execution " parallel="tests" thread-count="5" verbose="1">
+
+  <!-- Configuration for Suite-1 -->
+  <test name="Search for Products">
+    <classes>
+      <class name="webstaurantstore.tests.TestSearchProduct"/>
+    </classes>
+  </test> <!-- Test -->
+
+  <test name="Validate Cart actions">
+    <classes>
+      <class name="webstaurantstore.tests.TestCart"/>
+    </classes>
+  </test> <!-- Test -->
+</suite> <!-- Suite -->
