@@ -1,9 +1,17 @@
 package webstaurantstore.pageactions;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 import webstaurantstore.pageobjects.pages.HomePage;
 import webstaurantstore.pageobjects.pages.SearchPage;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.ServiceConfigurationError;
 
 
 /**
@@ -25,8 +33,8 @@ public class Actions {
      * @param product The product to search for.
      */
     public void doSearchForProduct (String product) {
-        var homepage = new HomePage(webDriver);
-        homepage.searchForProduct(product);
+        var homePage = new HomePage(webDriver);
+        homePage.searchForProduct(product);
     }
 
     /**
@@ -34,8 +42,30 @@ public class Actions {
      * @return The text of the search result element.
      */
     public String getSearchResultText() {
-        var searchpage = new SearchPage(webDriver);
-        return searchpage.SearchResultText();
+        var searchPage = new SearchPage(webDriver);
+        return searchPage.SearchResultText();
     }
+
+
+    public List<SearchPage> getProductLst() {
+        var searchPage = new SearchPage(webDriver);
+        var productList = searchPage.getAvailableProducts();
+        Assert.assertNotEquals(0, productList.size(), "[EMPTY_LIST], empty product list, ");
+//          TODO: Add logger msg
+        return productList;
+    }
+
+    public SearchPage getFirstProductElement() {
+        return getProductLst().getFirst();
+    }
+
+    public SearchPage getLastProductElement() {
+        return getProductLst().getLast();
+    }
+
+    public void addCart (SearchPage item) {
+        item.addToCart();
+    }
+
 
 }

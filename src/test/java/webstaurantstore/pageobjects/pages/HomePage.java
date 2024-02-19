@@ -14,11 +14,12 @@ public class HomePage extends BasePage {
     @FindBy(id = "searchval")
     WebElement SearchInput;
 
-    @FindBy(css="#searchForm button[type = 'submit']")
+    @FindBy(css = "#searchForm button[type = 'submit']")
     WebElement SearchButton;
 
     /**
      * Constructor to initialize the HomePage object.
+     *
      * @param context The search context (WebDriver) used to locate elements.
      */
     public HomePage(SearchContext context) {
@@ -27,6 +28,7 @@ public class HomePage extends BasePage {
 
     /**
      * Method to perform a search for a product on the HomePage.
+     *
      * @param product The product to search for.
      */
     public void searchForProduct(String product) {
