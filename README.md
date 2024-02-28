@@ -3,7 +3,7 @@
 #### Running the tests using Maven:
 
    ```sh
-   mvn test
+   mvn -X test
    ```
 
 #### Redirect the Maven log to a file using the –log-file option:

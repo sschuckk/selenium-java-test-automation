@@ -15,7 +15,7 @@
 
   <test name="Validate Cart actions">
     <classes>
-      <class name="webstaurantstore.tests.TestCart"/>
+      <class name="webstaurantstore.tests.TestItemsInCart"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->

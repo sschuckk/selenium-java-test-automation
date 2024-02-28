@@ -28,7 +28,7 @@ public class TestSearchProduct {
      */
     @BeforeTest
     public void setUp() {
-        logger.info("Starting Test Suite Setup!");
+        logger.info("Starting Suite Setup!");
         String URL = "https://www.webstaurantstore.com/";
 
         // Configure Chrome options
@@ -77,17 +77,17 @@ public class TestSearchProduct {
     @Test(dataProvider = "valid-product", description = "[TEST-ID:002] Search for a product and check the product text result")
     public void testSearchResultText(String product) {
         actions.doSearchForProduct(product);
-        final String result = actions.getSearchResultText();
+        var resultMessage = actions.getSearchResultText();
 
-        Assert.assertTrue(result.contains(product));
+        Assert.assertTrue(resultMessage.contains(product));
     }
 
     @Test(dataProvider = "invalid-product", description = "[TEST-ID:003] Search for an invalid product and check for the 'Sorry' message")
     public void testSearchNotFound(String product) {
         actions.doSearchForProduct(product);
-        final String result = actions.getSearchResultText();
+        var resultMessage = actions.getSearchResultText();
 
-        Assert.assertTrue(result.contains("Sorry, we couldn't find any matches for"));
+        Assert.assertTrue(resultMessage.contains("Sorry, we couldn't find any matches for"));
     }
 
     /**
