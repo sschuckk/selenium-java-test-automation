@@ -104,7 +104,7 @@ public class TestItemsInCart {
         final var emptyCartMsg = "Your cart is empty.";
 
         actions.doSearchForProduct(product);
-        var item = actions.getFirstProduct();
+        final var item = actions.getFirstProduct();
         actions.addToCart(item);
         actions.closeNotification();
         actions.goToCartAndCheckItemDescription(product);
