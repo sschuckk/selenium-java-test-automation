@@ -11,6 +11,8 @@ import org.openqa.selenium.support.FindBy;
  * Uses Page Factory Model to initialize WebElement instances.
  */
 public class HomePage extends BasePage {
+
+    // Locators for elements present on the page: https://www.webstaurantstore.com/
     @FindBy(id = "searchval")
     WebElement SearchInput;
 

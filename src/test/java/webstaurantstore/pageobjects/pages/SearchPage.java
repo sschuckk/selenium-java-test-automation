@@ -17,6 +17,7 @@ import java.util.List;
  */
 public class SearchPage extends BasePage {
 
+    // Locators for elements present on the page: https://www.webstaurantstore.com/search/
     @FindBy(className = "page-header")
     WebElement pageHeaderResult;
 
@@ -69,11 +70,12 @@ public class SearchPage extends BasePage {
     public List<SearchPage> getAvailableProducts() {
         List<SearchPage> availableProducts = new ArrayList<>();
         for (WebElement productElement : productBoxContainer) {
-            if (doesElementContains(productElement, By.name("addToCartButton"))) {
+            if (doesElementContain(productElement, By.name("addToCartButton"))) {
                 SearchPage searchPage = SearchPage.fromWebElement(productElement);
                 availableProducts.add(searchPage);
             }
         }
+        System.out.println(availableProducts);
         return availableProducts;
     }
 

@@ -1,11 +1,11 @@
 package webstaurantstore.pageobjects.pages;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.lang.Thread;
+import webstaurantstore.tests.TestSearchProduct;
 
 import java.time.Duration;
 
@@ -14,12 +14,19 @@ import java.time.Duration;
  * Abstract base class to help with the test struct using Page Object Model.
  */
 public abstract class BasePage {
-    final protected SearchContext context;
-    final protected FluentWait<SearchContext> fluentWait;
+    protected final SearchContext context;
+    protected final FluentWait<SearchContext> fluentWait;
+    private static final Logger logger = LogManager.getLogger(TestSearchProduct.class);
 
+    /**
+     * Constructor for BasePage class.
+     *
+     * @param context The search context used to locate elements on the page.
+     */
     public BasePage(SearchContext context) {
-        // Define the WebDriver fluent wait configuration
         this.context = context;
+
+        // Define the WebDriver fluent wait configuration
         this.fluentWait = new FluentWait<>(context)
                 .withTimeout(Duration.ofSeconds(5))
                 .pollingEvery(Duration.ofMillis(500))
@@ -27,7 +34,6 @@ public abstract class BasePage {
 
 
         // Initialize any WebElement instances using PageFactory
-        // NullPointerExceptions can be thrown if you make the assumption that the fields are already initialized.
         PageFactory.initElements(context, this);
     }
 
@@ -38,11 +44,12 @@ public abstract class BasePage {
      * @param childLocator  The locator used to identify the child element.
      * @return true if the parent element contains the child element, false otherwise.
      */
-    protected static boolean doesElementContains(WebElement parentElement, By childLocator) {
+    protected static boolean doesElementContain(WebElement parentElement, By childLocator) {
         try {
             parentElement.findElement(childLocator);
             return true;
         } catch (NoSuchElementException ex) {
+            logger.debug("The child element was not found in parent element!");
             return false;
         }
     }
@@ -56,8 +63,7 @@ public abstract class BasePage {
         try {
             fluentWait.until(webDriver -> element.isDisplayed() && element.isEnabled());
         } catch (TimeoutException ex) {
-            System.out.println("Timeout waiting for element to be present");
-            // TODO: Add logging
+            logger.debug("[TimeoutException] Timeout waiting for element to be present");
         }
     }
 }
