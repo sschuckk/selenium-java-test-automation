@@ -53,7 +53,7 @@ public class Actions {
         return productList;
     }
 
-    public SearchPage getFirstProductElement() {
+    public SearchPage getFirstProduct() {
         return getProductLst().getFirst();
     }
 
@@ -61,7 +61,7 @@ public class Actions {
         return getProductLst().getLast();
     }
 
-    public void addCart(SearchPage item) {
+    public void addToCart(SearchPage item) {
         item.addToCart();
     }
 
@@ -75,15 +75,19 @@ public class Actions {
         searchPage.closeNotification();
     }
 
-    public void checkItemInCartAndGoToCart() {
-        var searchPage = new SearchPage(webDriver);
-        searchPage.goToCart();
+    public boolean goToCartAndCheckItemDescription(String item) {
+        var cartPage = new CartPage(webDriver);
+        cartPage.goToCart();
+        var itemDescription = cartPage.getItemDescription();
+        System.out.println(itemDescription);
+        // contains() is case-sensitive
+        return itemDescription.toLowerCase().contains(item.toLowerCase());
     }
 
 
     public String increaseItemQuantityBy(int qty) {
         var cartPage = new CartPage(webDriver);
-        for(int i = 0; i < qty; i++) {
+        for (int i = 0; i < qty; i++) {
             cartPage.increaseItemQuantity();
         }
         return cartPage.getItemQuantity();
@@ -91,7 +95,7 @@ public class Actions {
 
     public String decreaseItemQuantityBy(int qty) {
         var cartPage = new CartPage(webDriver);
-        for(int i = 0; i < qty; i++) {
+        for (int i = 0; i < qty; i++) {
             cartPage.decreaseItemQuantity();
         }
         return cartPage.getItemQuantity();
@@ -99,7 +103,12 @@ public class Actions {
 
     public void removeItemFromCart() {
         var cartPage = new CartPage(webDriver);
-        cartPage.removeItem();
+        cartPage.removeOneItem();
+    }
+
+    public void emptyTheCart() {
+        var cartPage = new CartPage(webDriver);
+        cartPage.emptyCart();
     }
 
     public String getEmptyCartText() {

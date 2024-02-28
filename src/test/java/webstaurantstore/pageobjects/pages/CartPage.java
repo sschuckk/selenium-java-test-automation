@@ -10,6 +10,12 @@ import org.openqa.selenium.WebElement;
 public class CartPage extends BasePage {
 
     // Locators for elements present on the page: https://www.webstaurantstore.com/cart/
+    @FindBy(xpath = "//a[@data-testid='cart-button']")
+    WebElement goToCartButton;
+
+    @FindBy(css = ".itemDescription.description.overflow-visible")
+    WebElement itemDescription;
+
     @FindBy(xpath = "//input[@class='quantityInput input-mini']")
     WebElement itemQuantityInput;
 
@@ -28,6 +34,9 @@ public class CartPage extends BasePage {
     @FindBy(css = ".header-1")
     WebElement emptyCartMessage;
 
+    @FindBy(xpath = "//footer[@data-testid='modal-footer']//button[@type='button'][1]")
+    WebElement confirmEmptyCartButton;
+
     /**
      * Constructor for CartPage class.
      *
@@ -37,8 +46,18 @@ public class CartPage extends BasePage {
         super(context);
     }
 
+    public void goToCart() {
+        waitUntilElementIsDisplayed(goToCartButton);
+        goToCartButton.click();
+    }
+
+    public String getItemDescription() {
+        // Designed to work only with one item in cart
+        return itemDescription.getText();
+    }
+
     public String getItemQuantity() {
-        // Designed to work only with one type of element/item in cart
+        // Designed to work only with one in cart
         return itemQuantityInput.getAttribute("value");
     }
 
@@ -52,6 +71,12 @@ public class CartPage extends BasePage {
 
     public void removeOneItem() {
         removeItemButton.click();
+    }
+
+    public void emptyCart() {
+        emptyCartButton.click();
+        waitUntilElementIsDisplayed(confirmEmptyCartButton);
+        confirmEmptyCartButton.click();
     }
 
     public String getEmptyCartText() {
