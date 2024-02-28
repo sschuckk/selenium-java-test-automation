@@ -24,7 +24,7 @@ public class TestSearchProduct {
     private final Logger logger = LogManager.getLogger(TestSearchProduct.class);
 
     /**
-     * Setup method to initialize the WebDriver and navigate to the web page.
+     * Method to set up the test suite.
      */
     @BeforeTest
     public void setUp() {
@@ -36,7 +36,7 @@ public class TestSearchProduct {
         //options.addArguments("--remote-allow-origins=*");
         //options.addArguments("--headless");       // Run in headless mode
 
-        // Create a new instance of ChromeDriver and navigate to the specified URL
+        // Launch the browser and navigate to the application URL
         driver = new ChromeDriver(options);
         //driver.manage().window().maximize();      // Run in full size page
         driver.get(URL);

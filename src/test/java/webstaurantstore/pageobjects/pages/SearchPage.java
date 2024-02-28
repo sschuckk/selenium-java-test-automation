@@ -32,9 +32,6 @@ public class SearchPage extends BasePage {
     @FindBy(xpath = "//p[@class='msg']//button[@type='button']")
     WebElement closeCartNotification;
 
-    @FindBy(xpath = "//a[@data-testid='cart-button']")
-    WebElement goToCartButton;
-
     @FindBy(xpath = "//div[@data-role='notification']")
     WebElement popUp;
 
@@ -98,14 +95,4 @@ public class SearchPage extends BasePage {
             ex.printStackTrace();
         }
     }
-
-    public String itemsInCart() {
-        return goToCartButton.getText();
-    }
-
-    public void goToCart() {
-        waitUntilElementIsDisplayed(goToCartButton);
-        goToCartButton.click();
-    }
-
 }

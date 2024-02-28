@@ -47,11 +47,16 @@ public abstract class BasePage {
         }
     }
 
+    /**
+     * Waits until the specified WebElement is displayed and enabled. The wait time is specified in the fluentWait.
+     *
+     * @param element The WebElement to wait for.
+     */
     protected void waitUntilElementIsDisplayed(WebElement element) {
         try {
             fluentWait.until(webDriver -> element.isDisplayed() && element.isEnabled());
         } catch (TimeoutException ex) {
-            System.out.println("Timeout waiting for element to be removed from DOM");
+            System.out.println("Timeout waiting for element to be present");
             // TODO: Add logging
         }
     }
