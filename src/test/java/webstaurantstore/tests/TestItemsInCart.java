@@ -11,6 +11,7 @@ import webstaurantstore.pageactions.Actions;
 
 import java.lang.reflect.Method;
 
+
 /**
  * Test Suite to verify the functionality of cart page.
  */
@@ -38,7 +39,6 @@ public class TestItemsInCart {
         actions = new Actions(driver);
     }
 
-
     /**
      * Method to log the name of the test case being executed.
      * @param method The test method being executed.
@@ -48,8 +48,7 @@ public class TestItemsInCart {
         logger.info("Starting Test: " + method.getName());
     }
 
-
-    @Test(description = "Search for a product and add only first item to cart")
+    @Test(description = "[TEST-ID:0C1] Search for a product and add only first item to cart.")
     public void testAddFirstProductToCart() {
         final var product = "refrigerator";
 
@@ -58,11 +57,11 @@ public class TestItemsInCart {
         actions.addToCart(item);
         actions.closeNotification();
 
-        // Verify if item description contains the name searched for
+        // Check if item description contains the name searched for
         Assert.assertTrue(actions.goToCartAndCheckItemDescription(product));
     }
 
-    @Test(description = "Add a product to cart, update item quantity")
+    @Test(description = "[TEST-ID:0C2] Add a product to cart, update item quantity.")
     public void testCartQuantityUpdate() {
         final var product = "refrigerator";
 
@@ -81,8 +80,7 @@ public class TestItemsInCart {
         Assert.assertEquals(itemQtyDecreased, "1");
     }
 
-
-    @Test(description = "Add a product to cart and then remove the product by clicking in the removal button")
+    @Test(description = "[TEST-ID:0C3] Add a product to cart and then remove the product by clicking in the removal button.")
     public void testCartItemRemoval() {
         final var product = "refrigerator";
         final var emptyCartMsg = "Your cart is empty.";
@@ -98,7 +96,7 @@ public class TestItemsInCart {
         Assert.assertEquals(actions.getEmptyCartText(), emptyCartMsg);
     }
 
-    @Test(description = "Add a product to cart and then empty all the cart by clicking in the empty button")
+    @Test(description = "[TEST-ID:0C4] Add a product to cart and then empty all the cart by clicking in the empty button.")
     public void testCartEmptyState() {
         final var product = "refrigerator";
         final var emptyCartMsg = "Your cart is empty.";
@@ -113,7 +111,6 @@ public class TestItemsInCart {
         // Check if the empty cart message is displayed.
         Assert.assertEquals(actions.getEmptyCartText(), emptyCartMsg);
     }
-
 
     /**
      * Tear down method to close the WebDriver after running the tests.

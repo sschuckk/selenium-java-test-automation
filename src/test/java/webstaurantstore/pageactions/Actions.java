@@ -31,7 +31,7 @@ public class Actions {
      * @param product The product to search for.
      */
     public void doSearchForProduct(String product) {
-        var homePage = new HomePage(webDriver);
+        final HomePage homePage = new HomePage(webDriver);
         homePage.searchForProduct(product);
     }
 
@@ -41,24 +41,31 @@ public class Actions {
      * @return The text of the search result element.
      */
     public String getSearchResultText() {
-        var searchPage = new SearchPage(webDriver);
+        final SearchPage searchPage = new SearchPage(webDriver);
         return searchPage.searchResultText();
     }
 
-    public List<SearchPage> getProductLst() {
-        var searchPage = new SearchPage(webDriver);
-        var productList = searchPage.getAvailableProducts();
-        Assert.assertNotEquals(0, productList.size(), "[EMPTY_LIST], empty product list, ");
-        // TODO: Add logger msg
+    /**
+     * Retrieves a list of products from the search page.
+     *
+     * @return The list of products available on the search page.
+     * @throws AssertionError If the product list is empty.
+     */
+    public List<SearchPage> getProductList() {
+        final SearchPage searchPage = new SearchPage(webDriver);
+        final List<SearchPage> productList = searchPage.getAvailableProducts();
+
+        // Check that the list is not empty
+        Assert.assertNotEquals(0, productList.size(), "[EMPTY_LIST] The product list is empty. Please verify the product name.");
         return productList;
     }
 
     public SearchPage getFirstProduct() {
-        return getProductLst().getFirst();
+        return getProductList().getFirst();
     }
 
     public SearchPage getLastProductElement() {
-        return getProductLst().getLast();
+        return getProductList().getLast();
     }
 
     public void addToCart(SearchPage item) {
@@ -66,35 +73,50 @@ public class Actions {
     }
 
     public String getAddedToCartText() {
-        var searchPage = new SearchPage(webDriver);
+        final SearchPage searchPage = new SearchPage(webDriver);
         return searchPage.addedToCartNotification();
     }
 
     public void closeNotification() {
-        var searchPage = new SearchPage(webDriver);
+        final SearchPage searchPage = new SearchPage(webDriver);
         searchPage.closeNotification();
     }
 
+    /**
+     * Navigates to the cart page and checks if the item description contains the specified item.
+     *
+     * @param item The item to check in the item description.
+     * @return True if the item description contains the specified item; false otherwise.
+     */
     public boolean goToCartAndCheckItemDescription(String item) {
-        var cartPage = new CartPage(webDriver);
+        CartPage cartPage = new CartPage(webDriver);
         cartPage.goToCart();
-        var itemDescription = cartPage.getItemDescription();
-        System.out.println(itemDescription);
-        // contains() is case-sensitive
+        String itemDescription = cartPage.getItemDescription();
         return itemDescription.toLowerCase().contains(item.toLowerCase());
     }
 
-
+    /**
+     * Increases the quantity of the item in the cart by the specified quantity.
+     *
+     * @param qty The quantity by which to increase the item quantity.
+     * @return The updated quantity of the item in the cart.
+     */
     public String increaseItemQuantityBy(int qty) {
-        var cartPage = new CartPage(webDriver);
+        final CartPage cartPage = new CartPage(webDriver);
         for (int i = 0; i < qty; i++) {
             cartPage.increaseItemQuantity();
         }
         return cartPage.getItemQuantity();
     }
 
+    /**
+     * Decreases the quantity of the item in the cart by the specified quantity.
+     *
+     * @param qty The quantity by which to decrease the item quantity.
+     * @return The updated quantity of the item in the cart.
+     */
     public String decreaseItemQuantityBy(int qty) {
-        var cartPage = new CartPage(webDriver);
+        final CartPage cartPage = new CartPage(webDriver);
         for (int i = 0; i < qty; i++) {
             cartPage.decreaseItemQuantity();
         }
@@ -102,17 +124,17 @@ public class Actions {
     }
 
     public void removeItemFromCart() {
-        var cartPage = new CartPage(webDriver);
+        final CartPage cartPage = new CartPage(webDriver);
         cartPage.removeOneItem();
     }
 
     public void emptyTheCart() {
-        var cartPage = new CartPage(webDriver);
+        final CartPage cartPage = new CartPage(webDriver);
         cartPage.emptyCart();
     }
 
     public String getEmptyCartText() {
-        var cartPage = new CartPage(webDriver);
+        final CartPage cartPage = new CartPage(webDriver);
         return cartPage.getEmptyCartText();
     }
 }

@@ -28,23 +28,26 @@ public class TestSearchProduct {
      */
     @BeforeTest
     public void setUp() {
-        logger.info("Starting Suite Setup!");
         String URL = "https://www.webstaurantstore.com/";
+        logger.info("Starting Suite Setup!");
 
         // Configure Chrome options
         ChromeOptions options = new ChromeOptions();
-        //options.addArguments("--remote-allow-origins=*");
-        //options.addArguments("--headless");       // Run in headless mode
+        options.addArguments("incognito");  // Run in incognito/private mode.
 
         // Launch the browser and navigate to the application URL
         driver = new ChromeDriver(options);
         //driver.manage().window().maximize();      // Run in full size page
         driver.get(URL);
+
+        // Initialize Actions class for performing interactions with page objects.
         actions = new Actions(driver);
     }
 
     /**
-     * This method is executed before each test case just for debug purpose.2
+     * Method to log the name of the test case being executed.
+     *
+     * @param method The test method being executed.
      */
     @BeforeMethod
     public void logTest(Method method) {
@@ -65,29 +68,31 @@ public class TestSearchProduct {
         return new Object[][]{{"~"}, {"@#$"}, {"1234567890"}};
     }
 
-    /**
-     * User Interface Test Cases.
-     */
-    @Test(dataProvider = "valid-product", description = "[TEST-ID:001] Search for a product")
+    @Test(dataProvider = "valid-product", description = "[TEST-ID:0S1] Verify that searching for a valid product returns at least one item.")
     public void testSearchProduct(String product) {
         actions.doSearchForProduct(product);
-        actions.getProductLst();
+
+        // Check if the search for a product result in a list of product with at least 1 item.
+        actions.getProductList();
     }
 
-    @Test(dataProvider = "valid-product", description = "[TEST-ID:002] Search for a product and check the product text result")
+    @Test(dataProvider = "valid-product", description = "[TEST-ID:0S2] Search for a product and verify if the product name is displayed in result.")
     public void testSearchResultText(String product) {
         actions.doSearchForProduct(product);
-        var resultMessage = actions.getSearchResultText();
+        final var resultMessage = actions.getSearchResultText();
 
+        // Verify that the searched product name is displayed in the search result after the search action.
         Assert.assertTrue(resultMessage.contains(product));
     }
 
-    @Test(dataProvider = "invalid-product", description = "[TEST-ID:003] Search for an invalid product and check for the 'Sorry' message")
+    @Test(dataProvider = "invalid-product", description = "[TEST-ID:0S3] Search for an invalid product and verify the presence of the 'Sorry' as result.")
     public void testSearchNotFound(String product) {
+        final var sorryMessage = "Sorry, we couldn't find any matches for";
         actions.doSearchForProduct(product);
-        var resultMessage = actions.getSearchResultText();
+        final var resultMessage = actions.getSearchResultText();
 
-        Assert.assertTrue(resultMessage.contains("Sorry, we couldn't find any matches for"));
+        // Verify that the sorryMessage is displayed after search for an invalid product.
+        Assert.assertTrue(resultMessage.contains(sorryMessage));
     }
 
     /**
