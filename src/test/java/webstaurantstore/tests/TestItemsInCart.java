@@ -9,30 +9,52 @@ import org.testng.Assert;
 
 import webstaurantstore.pageactions.Actions;
 
+import java.lang.reflect.Method;
+
+/**
+ * Test Suite to verify the functionality of cart page.
+ */
 public class TestItemsInCart {
     private WebDriver driver;
     private Actions actions;
+
     // Create a logger instance.
     private final Logger logger = LogManager.getLogger(TestItemsInCart.class);
 
+    /**
+     * Method to set up the test suite.
+     */
     @BeforeTest
     public void setUp() {
-        logger.info("Starting Suite Setup!");
         String URL = "https://www.webstaurantstore.com/";
+        logger.info("Starting Suite Setup!");
 
+        // Launch the browser and navigate to the application URL
         driver = new ChromeDriver();
-        // Run in full size page.
-        driver.manage().window().maximize();
+        driver.manage().window().maximize();  // Run in full size page.
         driver.get(URL);
+
+        // Initialize Actions class for performing interactions with page objects.
         actions = new Actions(driver);
     }
+
+
+    /**
+     * Method to log the name of the test case being executed.
+     * @param method The test method being executed.
+     */
+    @BeforeMethod
+    public void logTest(Method method) {
+        logger.info("Starting Test: " + method.getName());
+    }
+
 
     @Test(description = "Search for a product and add only first item to cart")
     public void testAddFirstProductToCart() {
         final var product = "refrigerator";
 
         actions.doSearchForProduct(product);
-        var item = actions.getFirstProduct();
+        final var item = actions.getFirstProduct();
         actions.addToCart(item);
         actions.closeNotification();
 
@@ -45,17 +67,17 @@ public class TestItemsInCart {
         final var product = "refrigerator";
 
         actions.doSearchForProduct(product);
-        var item = actions.getFirstProduct();
+        final var item = actions.getFirstProduct();
         actions.addToCart(item);
         actions.closeNotification();
         actions.goToCartAndCheckItemDescription(product);
 
         // Increase the item quantity and verify if it displays the correct number of items.
-        var itemQtyIncreased = actions.increaseItemQuantityBy(10);
+        final var itemQtyIncreased = actions.increaseItemQuantityBy(10);
         Assert.assertEquals(itemQtyIncreased, "11");
 
         // Decrease the item quantity and verify if it displays the correct number of items.
-        var itemQtyDecreased = actions.decreaseItemQuantityBy(10);
+        final var itemQtyDecreased = actions.decreaseItemQuantityBy(10);
         Assert.assertEquals(itemQtyDecreased, "1");
     }
 
@@ -66,7 +88,7 @@ public class TestItemsInCart {
         final var emptyCartMsg = "Your cart is empty.";
 
         actions.doSearchForProduct(product);
-        var item = actions.getFirstProduct();
+        final var item = actions.getFirstProduct();
         actions.addToCart(item);
         actions.closeNotification();
         actions.goToCartAndCheckItemDescription(product);
