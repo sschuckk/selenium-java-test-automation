@@ -92,7 +92,7 @@ public class SearchPage extends BasePage {
         closeCartNotification.click();
         // TODO: Create a method do verify when a element fade-out
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         }

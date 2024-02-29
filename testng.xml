@@ -3,8 +3,8 @@
 <!-- SeleniumJavaTestAutomation -->
 
 <!-- Choose between Parallel or Sequence execution -->
-<!--<suite name="[Webstaurantstore: Suite-1] Sequence execution ">-->
-<suite name="[Webstaurantstore: Suite-2] Parallel execution " parallel="tests" thread-count="5" verbose="1">
+<!--<suite name="[Webstaurantstore] Sequence execution ">-->
+<suite name="[Webstaurantstore] Parallel execution " parallel="tests" thread-count="10" verbose="1">
 
   <!-- Configuration for Suite-1 -->
   <test name="Search for Products">
